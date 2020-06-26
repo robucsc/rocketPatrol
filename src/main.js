@@ -11,3 +11,5 @@ let config = {
 // create main game object
 let game = new Phaser.Game(config);
 
+// reserve some keyboard bindings
+let keyF, keyLEFT, keyRIGHT;
