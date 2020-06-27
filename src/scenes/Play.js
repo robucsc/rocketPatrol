@@ -49,7 +49,7 @@ class Play extends Phaser.Scene{
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-        keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP); // because why not?
+        keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP); // easter egg
 
         // score
         this.p1Score =0;
@@ -71,7 +71,7 @@ class Play extends Phaser.Scene{
 
         // 60 second play clock
         scoreConfig.fixedWidth = 0;
-        this.clock = this.time.delayedCall(60000, () => {
+        this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 + 64, '(F)ire to Restart', scoreConfig).setOrigin(0.5);
         }, null, this);
@@ -80,9 +80,12 @@ class Play extends Phaser.Scene{
 
     update(){ // ideally every frame
         // check key input for restart
-        if (this.gameOver && (Phaser.Input.Keyboard.JustDown(keyF) || Phaser.Input.Keyboard.JustDown(keyUP))){
-            this.scene.restart(this.p1Score);
+        // if (this.gameOver && (Phaser.Input.Keyboard.JustDown(keyF) || Phaser.Input.Keyboard.JustDown(keyUP))){
+        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyF)){
+            // this.scene.restart(this.p1Score);
+            this.scene.start("menuScene");
         }
+
         this.starfield.tilePositionX -= 4;
         // this.starfield2.tilePositionX -= 2;
 
@@ -99,8 +102,7 @@ class Play extends Phaser.Scene{
             this.p1Rocket.reset();
             // this.ship03.reset();
             this.shipExplode(this.ship03);
-            this.boom.x += 5;
-
+            // this.boom.x += 5;
         }
         if (this.checkCollision(this.p1Rocket, this.ship02)){
             console.log('ship 02 hit');
@@ -113,7 +115,6 @@ class Play extends Phaser.Scene{
             this.p1Rocket.reset();
             // this.ship01.reset();
             this.shipExplode(this.ship01);
-
         }
 
     }
@@ -134,18 +135,18 @@ class Play extends Phaser.Scene{
     shipExplode(ship){
         ship.alpha = 0;                         // temporarily hid ship
         // create explosion sprite at ship's position
-        // let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0, 0);
-        this.boom = this.add.sprite(ship.x - 50, ship.y, 'explosion').setOrigin(0, 0);
+        let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0, 0);
+        // this.boom = this.add.sprite(ship.x - 50, ship.y, 'explosion').setOrigin(0, 0);
 
-        this.boom.anims.play('explode');             // play explode animation
-        this.boom.on('animationcomplete', () => {    // callback after animation completes
+        boom.anims.play('explode');             // play explode animation
+        boom.on('animationcomplete', () => {    // callback after animation completes
             ship.reset();                       // reset ship position
             ship.alpha = 1;                     // make ship visible again
-            this.boom.destroy();                     // remove explosion sprite
-        this.boom.x += 1;
+            boom.destroy();                     // remove explosion sprite
         });
         this.p1Score += ship.points;
         this.scoreLeft.text = this.p1Score;
+        this.sound.play('sfx_explosion');
     }
     // shipExplode(ship){
     //     ship.alpha = 0;                         // temporarily hid ship

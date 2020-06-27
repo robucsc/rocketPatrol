@@ -8,6 +8,7 @@ class Rocket extends Phaser.GameObjects.Sprite{
 
         // create a custom property for the rocket
         this.isFiring = false;      // track the rocket's firing status—don't let the ship move
+        this.sfxRocket = scene.sound.add('sfx_rocket'); // add rocket sfx
     }
     update(){
         // left/right movement
@@ -21,9 +22,11 @@ class Rocket extends Phaser.GameObjects.Sprite{
         // fire button
         if (Phaser.Input.Keyboard.JustDown(keyF)){
                 this.isFiring = true;
+                this.sfxRocket.play(); // play sfx
         }
         if (Phaser.Input.Keyboard.JustDown(keyUP)){
             this.isFiring = true;
+            this.sfxRocket.play(); // play sfx
         }
 
         // if fired move bullet up
