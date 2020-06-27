@@ -12,4 +12,4 @@ let config = {
 let game = new Phaser.Game(config);
 
 // reserve some keyboard bindings
-let keyF, keyLEFT, keyRIGHT;
+let keyF, keyLEFT, keyRIGHT, keyUP;
