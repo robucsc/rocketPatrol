@@ -1,4 +1,6 @@
-// console.log("hello world");
+// A recreation of Rocket Patrol for CMPM 120 Summer 2020
+// Nearly all of this code is Nathan's!!
+// All of the errors are mine!!
 
 // create game configuration object
 let config = {

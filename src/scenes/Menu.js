@@ -10,14 +10,6 @@ class Menu extends Phaser.Scene{
         this.load.audio('sfx_rocket', './assets/rocket_shot.wav');
     }
 
-    // init(){
-    //
-    // }
-
-    // preload(){
-    //
-    // }
-
     create(){
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -46,11 +38,6 @@ class Menu extends Phaser.Scene{
         menuConfig.backgroundColor = '#00FF00';
         menuConfig.color = '#000';
         this.add.text(centerX, centerY + textSpacer, 'Press ← for Easy or → for Hard', menuConfig).setOrigin(0.5);
-
-        // menu text
-        // this.add.text(20, 20, "Rocket Patrol Menu");
-        // debug: move to next scene—start playScene from this scene
-        // this.scene.start("playScene")
     }
 
     update(){ // ideally every frame
